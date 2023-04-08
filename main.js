@@ -9,7 +9,7 @@ function setup() {
     // possible = [color(0, 255, 255), color(128, 0, 128), color(255, 0, 255)];
     possible = [color(0, 0, 255), color(0, 0, 200), color(0, 100, 200), color(0, 150, 200)]
 
-    for (var i = 0; i < 1; i++) {
+    for (var i = 0; i < 100; i++) {
         system.x = random(6, width-6);
         system.y = random(6, height-6)
         system.addBall(possible[~~(Math.random()*possible.length)]);
@@ -54,9 +54,29 @@ function Line(x1, y1, x2, y2) {
                 
                 // var d =  ball.r;
                 var p = p5.Vector.add(this.p0, p5.Vector.mult(p5.Vector.sub(this.p1, this.p0), t));
-                ellipse(p.x, p.y, 100, 100);
-                print(p);
-                ball.pos.set(p5.Vector.add(p, p5.Vector.mult(this.normal, ball.r)));
+                // ellipse(p.x, p.y, 100, 100);
+                // print(p);
+                var line = p5.Vector.sub(ball.pos, p);
+                var dist = line.mag();
+                // print(dist);
+                // print(dist);
+
+                var vel = p5.Vector.sub(ball.old, ball.pos);
+
+                var n = p5.Vector.div(line, dist);
+                var delta = ball.r-dist;
+
+                // ball.old.set(p5.Vector.add(p, p5.Vector.mult(this.normal, ball.r)));
+                // ball.pos.add(p5.Vector.mult(this.normal, 1));
+                // ball.pos.x += ReadableByteStreamController.
+
+                var inside = p5.Vector.mult(n, 2*delta);
+                print(inside);
+                var angle = atan2(this.y2-this.y1, this.x2-this.x1);
+
+                ball.pos.add(vel);
+                ball.pos.add(inside);
+                // ball.accelerate(createVector(50*cos(angle), 50*sin(angle)));
                 // print(p);
                 // var v = ball.vel,
                 // a2 = v.dot(v), 
@@ -279,13 +299,13 @@ function System(x, y, vx, vy) {
                 }
             }
 
-            for (let j = 0; j < lines.length; j++) {
-                lines[j].collide(ball1);
+            // for (let j = 0; j < lines.length; j++) {
+            //     lines[j].collide(ball1);
                 
-                // if (lines[i].collide(ball1)) {
+            //     // if (lines[i].collide(ball1)) {
 
-                // }
-            }
+            //     // }
+            // }
         }
         
     };
@@ -360,8 +380,8 @@ function draw() {
 
     background(0);
     system.update();
-    stroke(255);
-    for(let i = 0; i < lines.length; i++) {
-        lines[i].display();
-    }
+    // stroke(255);
+    // for(let i = 0; i < lines.length; i++) {
+    //     lines[i].display();
+    // }
 }
