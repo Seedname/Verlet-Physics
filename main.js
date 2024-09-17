@@ -365,19 +365,20 @@ var finished = 0;
 
 function draw() {
     var elapsed = millis()-start;
-    if(system.balls.length < 450) {
+    if(system.balls.length < 250) {
         system.x = width/2 + width/2 * Math.cos(elapsed);
         system.y = height/2 + height/2 * Math.sin(elapsed);
         if(frameCount % 1 === 0) {
             system.addBall(possible[~~(Math.random()*possible.length)]);
             index ++;
         }
-    } else if(!snapshot && finished != 0 && elapsed > finished+delay) {
-        snapshot = true;
-        mapToSprite(mapSprite);
-    } else {
-        finished = elapsed;
     }
+    // } else if(!snapshot && finished != 0 && elapsed > finished+delay) {
+    //     snapshot = true;
+    //     mapToSprite(mapSprite);
+    // } else {
+    //     finished = elapsed;
+    // }
 
     background(0);
     system.update();
